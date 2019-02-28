@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.goldcard.iot.dao.mysql.CollectionRecordMysqlMapper">
+  <resultMap id="BaseResultMap" type="com.goldcard.iot.domain.CollectionRecord">
+    <id column="CR_ID" jdbcType="VARCHAR" property="crId" />
+    <result column="EQ_ID" jdbcType="VARCHAR" property="eqId" />
+    <result column="EQ_NO" jdbcType="VARCHAR" property="eqNo" />
+    <result column="CMD_ID" jdbcType="VARCHAR" property="cmdId" />
+    <result column="Create_Time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="Reading_Time" jdbcType="TIMESTAMP" property="readingTime" />
+    <result column="Reading_Value" jdbcType="DECIMAL" property="readingValue" />
+    <result column="Data_Date" jdbcType="TIMESTAMP" property="dataDate" />
+    <result column="Balance_Quantity" jdbcType="DECIMAL" property="balanceQuantity" />
+    <result column="Total_Quantity" jdbcType="DECIMAL" property="totalQuantity" />
+    <result column="Total_Credit" jdbcType="DECIMAL" property="totalCredit" />
+    <result column="Total_Debit_Quantity" jdbcType="DECIMAL" property="totalDebitQuantity" />
+    <result column="Total_Debit" jdbcType="DECIMAL" property="totalDebit" />
+    <result column="Meter_Price_ID" jdbcType="VARCHAR" property="meterPriceId" />
+    <result column="Meter_Price_Version" jdbcType="DECIMAL" property="meterPriceVersion" />
+    <result column="Working_Flow" jdbcType="DECIMAL" property="workingFlow" />
+    <result column="Standard_Flow" jdbcType="DECIMAL" property="standardFlow" />
+    <result column="Working_Sum" jdbcType="DECIMAL" property="workingSum" />
+    <result column="Pressure" jdbcType="DECIMAL" property="pressure" />
+    <result column="Temperature" jdbcType="DECIMAL" property="temperature" />
+    <result column="Standard_Sum" jdbcType="DECIMAL" property="standardSum" />
+    <result column="Meter_Time" jdbcType="TIMESTAMP" property="meterTime" />
+    <result column="Valve_State_ID" jdbcType="VARCHAR" property="valveStateId" />
+    <result column="TENANT_ID" jdbcType="VARCHAR" property="tenantId" />
+    <result column="Org_ID" jdbcType="VARCHAR" property="orgId" />
+    <result column="Price" jdbcType="DECIMAL" property="price" />
+    <result column="dev_no" jdbcType="VARCHAR" property="devNo" />
+    <result column="slave_no" jdbcType="VARCHAR" property="slaveNo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CR_ID, EQ_ID, EQ_NO, CMD_ID, Create_Time, Reading_Time, Reading_Value, Data_Date, 
+    Balance_Quantity, Total_Quantity, Total_Credit, Total_Debit_Quantity, Total_Debit, 
+    Meter_Price_ID, Meter_Price_Version, Working_Flow, Standard_Flow, Working_Sum, Pressure, 
+    Temperature, Standard_Sum, Meter_Time, Valve_State_ID, TENANT_ID, Org_ID, Price, 
+    dev_no, slave_no
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from collection_record
+    where CR_ID = #{crId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from collection_record
+    where CR_ID = #{crId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.goldcard.iot.domain.CollectionRecord">
+    insert into collection_record (CR_ID, EQ_ID, EQ_NO, 
+      CMD_ID, Create_Time, Reading_Time, 
+      Reading_Value, Data_Date, Balance_Quantity, 
+      Total_Quantity, Total_Credit, Total_Debit_Quantity, 
+      Total_Debit, Meter_Price_ID, Meter_Price_Version, 
+      Working_Flow, Standard_Flow, Working_Sum, 
+      Pressure, Temperature, Standard_Sum, 
+      Meter_Time, Valve_State_ID, TENANT_ID, 
+      Org_ID, Price, dev_no, 
+      slave_no)
+    values (#{crId,jdbcType=VARCHAR}, #{eqId,jdbcType=VARCHAR}, #{eqNo,jdbcType=VARCHAR}, 
+      #{cmdId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{readingTime,jdbcType=TIMESTAMP}, 
+      #{readingValue,jdbcType=DECIMAL}, #{dataDate,jdbcType=TIMESTAMP}, #{balanceQuantity,jdbcType=DECIMAL}, 
+      #{totalQuantity,jdbcType=DECIMAL}, #{totalCredit,jdbcType=DECIMAL}, #{totalDebitQuantity,jdbcType=DECIMAL}, 
+      #{totalDebit,jdbcType=DECIMAL}, #{meterPriceId,jdbcType=VARCHAR}, #{meterPriceVersion,jdbcType=DECIMAL}, 
+      #{workingFlow,jdbcType=DECIMAL}, #{standardFlow,jdbcType=DECIMAL}, #{workingSum,jdbcType=DECIMAL}, 
+      #{pressure,jdbcType=DECIMAL}, #{temperature,jdbcType=DECIMAL}, #{standardSum,jdbcType=DECIMAL}, 
+      #{meterTime,jdbcType=TIMESTAMP}, #{valveStateId,jdbcType=VARCHAR}, #{tenantId,jdbcType=VARCHAR}, 
+      #{orgId,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{devNo,jdbcType=VARCHAR}, 
+      #{slaveNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.goldcard.iot.domain.CollectionRecord">
+    insert into collection_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="crId != null">
+        CR_ID,
+      </if>
+      <if test="eqId != null">
+        EQ_ID,
+      </if>
+      <if test="eqNo != null">
+        EQ_NO,
+      </if>
+      <if test="cmdId != null">
+        CMD_ID,
+      </if>
+      <if test="createTime != null">
+        Create_Time,
+      </if>
+      <if test="readingTime != null">
+        Reading_Time,
+      </if>
+      <if test="readingValue != null">
+        Reading_Value,
+      </if>
+      <if test="dataDate != null">
+        Data_Date,
+      </if>
+      <if test="balanceQuantity != null">
+        Balance_Quantity,
+      </if>
+      <if test="totalQuantity != null">
+        Total_Quantity,
+      </if>
+      <if test="totalCredit != null">
+        Total_Credit,
+      </if>
+      <if test="totalDebitQuantity != null">
+        Total_Debit_Quantity,
+      </if>
+      <if test="totalDebit != null">
+        Total_Debit,
+      </if>
+      <if test="meterPriceId != null">
+        Meter_Price_ID,
+      </if>
+      <if test="meterPriceVersion != null">
+        Meter_Price_Version,
+      </if>
+      <if test="workingFlow != null">
+        Working_Flow,
+      </if>
+      <if test="standardFlow != null">
+        Standard_Flow,
+      </if>
+      <if test="workingSum != null">
+        Working_Sum,
+      </if>
+      <if test="pressure != null">
+        Pressure,
+      </if>
+      <if test="temperature != null">
+        Temperature,
+      </if>
+      <if test="standardSum != null">
+        Standard_Sum,
+      </if>
+      <if test="meterTime != null">
+        Meter_Time,
+      </if>
+      <if test="valveStateId != null">
+        Valve_State_ID,
+      </if>
+      <if test="tenantId != null">
+        TENANT_ID,
+      </if>
+      <if test="orgId != null">
+        Org_ID,
+      </if>
+      <if test="price != null">
+        Price,
+      </if>
+      <if test="devNo != null">
+        dev_no,
+      </if>
+      <if test="slaveNo != null">
+        slave_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="crId != null">
+        #{crId,jdbcType=VARCHAR},
+      </if>
+      <if test="eqId != null">
+        #{eqId,jdbcType=VARCHAR},
+      </if>
+      <if test="eqNo != null">
+        #{eqNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cmdId != null">
+        #{cmdId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="readingTime != null">
+        #{readingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="readingValue != null">
+        #{readingValue,jdbcType=DECIMAL},
+      </if>
+      <if test="dataDate != null">
+        #{dataDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="balanceQuantity != null">
+        #{balanceQuantity,jdbcType=DECIMAL},
+      </if>
+      <if test="totalQuantity != null">
+        #{totalQuantity,jdbcType=DECIMAL},
+      </if>
+      <if test="totalCredit != null">
+        #{totalCredit,jdbcType=DECIMAL},
+      </if>
+      <if test="totalDebitQuantity != null">
+        #{totalDebitQuantity,jdbcType=DECIMAL},
+      </if>
+      <if test="totalDebit != null">
+        #{totalDebit,jdbcType=DECIMAL},
+      </if>
+      <if test="meterPriceId != null">
+        #{meterPriceId,jdbcType=VARCHAR},
+      </if>
+      <if test="meterPriceVersion != null">
+        #{meterPriceVersion,jdbcType=DECIMAL},
+      </if>
+      <if test="workingFlow != null">
+        #{workingFlow,jdbcType=DECIMAL},
+      </if>
+      <if test="standardFlow != null">
+        #{standardFlow,jdbcType=DECIMAL},
+      </if>
+      <if test="workingSum != null">
+        #{workingSum,jdbcType=DECIMAL},
+      </if>
+      <if test="pressure != null">
+        #{pressure,jdbcType=DECIMAL},
+      </if>
+      <if test="temperature != null">
+        #{temperature,jdbcType=DECIMAL},
+      </if>
+      <if test="standardSum != null">
+        #{standardSum,jdbcType=DECIMAL},
+      </if>
+      <if test="meterTime != null">
+        #{meterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="valveStateId != null">
+        #{valveStateId,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantId != null">
+        #{tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null">
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="devNo != null">
+        #{devNo,jdbcType=VARCHAR},
+      </if>
+      <if test="slaveNo != null">
+        #{slaveNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.goldcard.iot.domain.CollectionRecord">
+    update collection_record
+    <set>
+      <if test="eqId != null">
+        EQ_ID = #{eqId,jdbcType=VARCHAR},
+      </if>
+      <if test="eqNo != null">
+        EQ_NO = #{eqNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cmdId != null">
+        CMD_ID = #{cmdId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        Create_Time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="readingTime != null">
+        Reading_Time = #{readingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="readingValue != null">
+        Reading_Value = #{readingValue,jdbcType=DECIMAL},
+      </if>
+      <if test="dataDate != null">
+        Data_Date = #{dataDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="balanceQuantity != null">
+        Balance_Quantity = #{balanceQuantity,jdbcType=DECIMAL},
+      </if>
+      <if test="totalQuantity != null">
+        Total_Quantity = #{totalQuantity,jdbcType=DECIMAL},
+      </if>
+      <if test="totalCredit != null">
+        Total_Credit = #{totalCredit,jdbcType=DECIMAL},
+      </if>
+      <if test="totalDebitQuantity != null">
+        Total_Debit_Quantity = #{totalDebitQuantity,jdbcType=DECIMAL},
+      </if>
+      <if test="totalDebit != null">
+        Total_Debit = #{totalDebit,jdbcType=DECIMAL},
+      </if>
+      <if test="meterPriceId != null">
+        Meter_Price_ID = #{meterPriceId,jdbcType=VARCHAR},
+      </if>
+      <if test="meterPriceVersion != null">
+        Meter_Price_Version = #{meterPriceVersion,jdbcType=DECIMAL},
+      </if>
+      <if test="workingFlow != null">
+        Working_Flow = #{workingFlow,jdbcType=DECIMAL},
+      </if>
+      <if test="standardFlow != null">
+        Standard_Flow = #{standardFlow,jdbcType=DECIMAL},
+      </if>
+      <if test="workingSum != null">
+        Working_Sum = #{workingSum,jdbcType=DECIMAL},
+      </if>
+      <if test="pressure != null">
+        Pressure = #{pressure,jdbcType=DECIMAL},
+      </if>
+      <if test="temperature != null">
+        Temperature = #{temperature,jdbcType=DECIMAL},
+      </if>
+      <if test="standardSum != null">
+        Standard_Sum = #{standardSum,jdbcType=DECIMAL},
+      </if>
+      <if test="meterTime != null">
+        Meter_Time = #{meterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="valveStateId != null">
+        Valve_State_ID = #{valveStateId,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantId != null">
+        TENANT_ID = #{tenantId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null">
+        Org_ID = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        Price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="devNo != null">
+        dev_no = #{devNo,jdbcType=VARCHAR},
+      </if>
+      <if test="slaveNo != null">
+        slave_no = #{slaveNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CR_ID = #{crId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.goldcard.iot.domain.CollectionRecord">
+    update collection_record
+    set EQ_ID = #{eqId,jdbcType=VARCHAR},
+      EQ_NO = #{eqNo,jdbcType=VARCHAR},
+      CMD_ID = #{cmdId,jdbcType=VARCHAR},
+      Create_Time = #{createTime,jdbcType=TIMESTAMP},
+      Reading_Time = #{readingTime,jdbcType=TIMESTAMP},
+      Reading_Value = #{readingValue,jdbcType=DECIMAL},
+      Data_Date = #{dataDate,jdbcType=TIMESTAMP},
+      Balance_Quantity = #{balanceQuantity,jdbcType=DECIMAL},
+      Total_Quantity = #{totalQuantity,jdbcType=DECIMAL},
+      Total_Credit = #{totalCredit,jdbcType=DECIMAL},
+      Total_Debit_Quantity = #{totalDebitQuantity,jdbcType=DECIMAL},
+      Total_Debit = #{totalDebit,jdbcType=DECIMAL},
+      Meter_Price_ID = #{meterPriceId,jdbcType=VARCHAR},
+      Meter_Price_Version = #{meterPriceVersion,jdbcType=DECIMAL},
+      Working_Flow = #{workingFlow,jdbcType=DECIMAL},
+      Standard_Flow = #{standardFlow,jdbcType=DECIMAL},
+      Working_Sum = #{workingSum,jdbcType=DECIMAL},
+      Pressure = #{pressure,jdbcType=DECIMAL},
+      Temperature = #{temperature,jdbcType=DECIMAL},
+      Standard_Sum = #{standardSum,jdbcType=DECIMAL},
+      Meter_Time = #{meterTime,jdbcType=TIMESTAMP},
+      Valve_State_ID = #{valveStateId,jdbcType=VARCHAR},
+      TENANT_ID = #{tenantId,jdbcType=VARCHAR},
+      Org_ID = #{orgId,jdbcType=VARCHAR},
+      Price = #{price,jdbcType=DECIMAL},
+      dev_no = #{devNo,jdbcType=VARCHAR},
+      slave_no = #{slaveNo,jdbcType=VARCHAR}
+    where CR_ID = #{crId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.goldcard.iot.dao.ch.CollectionRecordMapper">
+  <resultMap id="ResultMap" type="com.goldcard.iot.domain.CollectionRecordResultDTO">
+    <result column="EQ_NO" jdbcType="VARCHAR" property="eqNo" />
+    <result column="Create_Time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="Data_Date" jdbcType="TIMESTAMP" property="dataDate" />
+
+    <result column="Meter_Time" jdbcType="TIMESTAMP" property="meterTime" />
+    <result column="Standard_Sum" jdbcType="DECIMAL" property="standardSum" />
+    <result column="Working_Sum" jdbcType="DECIMAL" property="workingSum" />
+
+    <result column="Balance_Quantity" jdbcType="DECIMAL" property="balanceQuantity" />
+    <result column="Standard_Flow" jdbcType="DECIMAL" property="standardFlow" />
+    <result column="Working_Flow" jdbcType="DECIMAL" property="workingFlow" />
+    <result column="Temperature" jdbcType="DECIMAL" property="temperature" />
+    <result column="Pressure" jdbcType="DECIMAL" property="pressure" />
+    <result column="customer_name" jdbcType="VARCHAR" property="customerName" />
+  </resultMap>
+
+  <select id="findByQueryDTO" resultMap="ResultMap" parameterType="com.goldcard.iot.domain.CollectionRecordQueryDTO">
+    select
+    b.EQ_NO,
+    b.Create_Time,
+    b.Data_Date,
+    b.Meter_Time,
+    b.Standard_Sum,
+    b.Working_Sum,
+    b.Balance_Quantity,
+    b.Standard_Flow,
+    b.Working_Flow,
+    b.Temperature,
+    b.Pressure,
+    m.customer_name
+    from
+    (
+    SELECT EQ_ID,EQ_NO,Create_Time,Data_Date,Meter_Time,Standard_Sum as meter_reading,Standard_Sum,Working_Sum,Balance_Quantity,Standard_Flow,Working_Flow,Temperature,Pressure
+    FROM collection_record_more 
+    <where>
+    <if test="eqNo != null and eqNo != ''">
+      and EQ_NO = #{eqNo}
+    </if>
+    <if test="collectionTimeStart != null and collectionTimeEnd != null">
+      and Create_Time <![CDATA[ >=  ]]> #{collectionTimeStart} and Create_Time  <![CDATA[ < ]]> #{collectionTimeEnd}
+    </if>
+    <if test="customerName != null">
+      and EQ_ID in (select meter_id from meter where customer_name like #{customerName})
+    </if>
+    <if test="standardFlowStart != null and standardFlowEnd != null">
+      and Standard_Flow <![CDATA[ >=  ]]> #{standardFlowStart} and Standard_Flow  <![CDATA[ <= ]]> #{standardFlowEnd}
+    </if>
+    <if test="temperatureStart != null and temperatureEnd != null">
+      and Temperature <![CDATA[ >=  ]]> #{temperatureStart} and Temperature  <![CDATA[ <= ]]> #{temperatureEnd}
+    </if>
+    <if test="pressureStart != null and pressureEnd != null">
+      and Pressure <![CDATA[ >=  ]]> #{pressureStart} and Pressure  <![CDATA[ <= ]]> #{pressureEnd}
+    </if>
+      and  TENANT_ID = #{tenantId} 
+    </where>
+    ) b left JOIN meter m on b.EQ_ID=m.meter_id
+  </select>
+
+  <select id="countWithResidentMeter" resultType="java.lang.Long"
+    parameterType="com.goldcard.iot.domain.CollectionRecordQueryDTO">
+    select
+    count(*)
+    from meter where
+    (PT_ID = '6011001' or PT_ID = '6011007')
+    and tenant_id = #{tenantId}
+    and org_id like #{orgId}
+    <if test="customerName != null">
+      and customer_name like #{customerName}
+    </if>
+    <if test="eqNo != null">
+      and meter_no = #{eqNo}
+    </if>
+  </select>
+  <select id="countWithBusinessMeter" resultType="java.lang.Long"
+          parameterType="com.goldcard.iot.domain.CollectionRecordQueryDTO">
+    select
+    count(*)
+    from meter where
+    (PT_ID = '6011002' or PT_ID = '6011008')
+    and tenant_id = #{tenantId}
+    and org_id like #{orgId}
+    <if test="customerName != null">
+      and customer_name like #{customerName}
+    </if>
+    <if test="eqNo != null">
+      and meter_no = #{eqNo}
+    </if>
+  </select>
+  <select id="countWithDTU" resultType="java.lang.Long"
+          parameterType="com.goldcard.iot.domain.CollectionRecordQueryDTO">
+    select
+    count(*)
+    from meter where
+    (PT_ID = '6011005' or PT_ID = '6012011')
+    and tenant_id = #{tenantId}
+    and org_id like #{orgId}
+    <if test="customerName != null">
+      and customer_name like #{customerName}
+    </if>
+    <if test="eqNo != null">
+      and meter_no = #{eqNo}
+    </if>
+  </select>
+</mapper>
